@@ -126,8 +126,7 @@ export default function IntroPage() {
             </h1>
             <p style={{ fontSize: "1.15rem", marginTop: "1rem", maxWidth: 900, margin: "0 auto" }}>
               Artiquarium brings gallery-level curation to the browser. Walk through virtual
-              exhibitions, discover trending collections, and connect directly with artists —
-              all from wherever you are.
+              exhibitions, discover trending collections, and connect directly with artists from wherever you are.
             </p>
           </div>
 
