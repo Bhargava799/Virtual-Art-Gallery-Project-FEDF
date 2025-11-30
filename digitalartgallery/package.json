@@ -9,8 +9,9 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "predeploy": "npm run build",
+    "predeploy": "npm run build && node -e \"require('fs').copyFileSync('dist/index.html','dist/404.html')\"",
     "deploy": "gh-pages -d dist",
+    "deploy:frontend": "npm run build && node -e \"require('fs').copyFileSync('dist/index.html','dist/404.html')\" && gh-pages -d dist",
     "deploy:subtree": "git add -f dist && git commit -m \"deploy: dist subtree\" || true && git subtree push --prefix dist origin gh-pages"
   },
   "dependencies": {
