@@ -6,7 +6,7 @@ import DataContent from "./components/DataContent"
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/Virtual-Art-Gallery-Project-FEDF">
     <DataContent>
       <Routes1 />
     </DataContent>
