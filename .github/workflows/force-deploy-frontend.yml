@@ -1,0 +1,40 @@
+name: Force Deploy Frontend to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  force-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install frontend dependencies
+        run: npm ci
+        working-directory: ./digitalartgallery
+
+      - name: Build frontend
+        run: npm run build
+        working-directory: ./digitalartgallery
+
+      - name: Create 404 for SPA routing
+        run: node -e "require('fs').copyFileSync('dist/index.html','dist/404.html')"
+        working-directory: ./digitalartgallery
+
+      - name: Force publish to gh-pages (orphan)
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./digitalartgallery/dist
+          # Create an orphan gh-pages branch and force overwrite
+          force_orphan: true
+          user_name: github-actions[bot]
+          user_email: 41898282+github-actions[bot]@users.noreply.github.com
