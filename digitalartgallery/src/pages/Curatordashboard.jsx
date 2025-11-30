@@ -9,8 +9,8 @@ import {
 import { useNavigate } from "react-router-dom";
 
 // ✅ Import images for Curator Dashboard
-import createExhibitionImg from "../assets/createExhibition.jpg"; // replace with your image
-import manageExhibitionImg from "../assets/manage.png"; // replace with your image
+import createExhibitionImg from "../assets/bg3.webp"; // replace with your image
+import manageExhibitionImg from "../assets/createExhibition.jpg"; // replace with your image
 import analysisExhibitionImg from "../assets/analysis.jpg"; // replace with your image
 
 const Curatordashboard = () => {

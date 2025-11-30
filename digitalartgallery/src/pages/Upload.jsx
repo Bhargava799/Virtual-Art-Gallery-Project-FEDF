@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { Button, TextField, Typography, Box } from "@mui/material";
-import { useData } from "../components/DataContent"; // ✅ Import DataContent
+import { useNavigate } from "react-router-dom";
 
-const Upload = () => {
-  const { artistData, setArtistData } = useData(); // ✅ Use artistData from context
+const Upload = ({ artworks, setArtworks }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState("");
+
+  const navigate = useNavigate();
 
   const handleFileChange = (e) => {
     const uploadedFile = e.target.files[0];
@@ -20,65 +21,47 @@ const Upload = () => {
 
   const handleUpload = () => {
     if (!file || !title || !price) {
-      alert("Please provide a title, price, and select a picture before uploading.");
+      alert("Please provide title, price and select an image!");
       return;
     }
 
     const reader = new FileReader();
     reader.onloadend = () => {
+      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      if (!currentUser || currentUser.role !== "Artist") {
+        alert("Only Artists can upload artworks!");
+        return;
+      }
+
       const newArtwork = {
         id: Date.now(),
         title,
         description,
-        price: `$${price}`,
+        price,
         image: reader.result,
+        artist: currentUser.username,
       };
 
-      // ✅ Get logged-in artist username
-      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-      if (!currentUser || currentUser.role !== "Artist") {
-        alert("You must be logged in as an Artist to upload artworks.");
-        return;
-      }
-      const username = currentUser.username;
+      const updatedArtworks = [...artworks, newArtwork];
+      setArtworks(updatedArtworks);
+      localStorage.setItem("artworks", JSON.stringify(updatedArtworks));
 
-      // ✅ Update artistData in context
-      const updatedArtistData = { ...artistData };
-      if (!updatedArtistData[username]) updatedArtistData[username] = [];
-      updatedArtistData[username].push(newArtwork);
-      setArtistData(updatedArtistData);
+      alert("Artwork uploaded successfully!");
 
-      alert("Artwork uploaded successfully 🎨");
-
-      // Reset fields
       setTitle("");
       setDescription("");
       setPrice("");
       setFile(null);
       setPreview("");
+
+      navigate("/manage");
     };
 
     reader.readAsDataURL(file);
   };
 
   return (
-    <div
-      style={{
-        position: "relative",
-        minHeight: "100vh",
-        padding: "40px 20px",
-        zIndex: 1,
-      }}
-    >
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
-          zIndex: -1,
-        }}
-      ></div>
-
+    <div style={{ padding: "20px" }}>
       <Box
         sx={{
           maxWidth: 500,
@@ -90,14 +73,7 @@ const Upload = () => {
           boxShadow: 3,
         }}
       >
-        <Typography
-          variant="h4"
-          gutterBottom
-          align="center"
-          sx={{ color: "black", fontWeight: "bold" }}
-        >
-          Upload Artwork
-        </Typography>
+        <Typography variant="h4" textAlign="center">Upload Artwork</Typography>
 
         <TextField
           label="Title"
@@ -133,16 +109,8 @@ const Upload = () => {
 
         {preview && (
           <Box mt={2}>
-            <Typography variant="subtitle1">Preview:</Typography>
-            <img
-              src={preview}
-              alt="Preview"
-              style={{
-                width: "100%",
-                borderRadius: 8,
-                marginTop: "8px",
-              }}
-            />
+            <Typography variant="subtitle1">Preview</Typography>
+            <img src={preview} alt="Preview" style={{ width: "100%", borderRadius: 8 }} />
           </Box>
         )}
 

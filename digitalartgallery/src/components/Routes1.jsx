@@ -26,6 +26,7 @@ import Analysis from "../pages/Analysis";
 import CreateExhibition from "../pages/CreateExhibition";
 import ManageExhibitions from "../pages/ManageExhibitions";
 import ExhibitionAnalysis from "../pages/ExhibitionAnalysis";
+import Exhibitions1 from "../pages/Exhibitions1";
 
 const Routes1 = () => {
   const [cart, setCart] = useState([]);
@@ -287,6 +288,18 @@ const Routes1 = () => {
                 exhibitions={exhibitions}
                 setExhibitions={setExhibitions}
               />
+            </Weblayout>
+          </TransparentLayout>
+        }
+      />
+
+      <Route
+        path="/exhibitions"
+        element={
+          <TransparentLayout>
+            <Weblayout>
+              <Navbar1 username={user.username} role={user.role} />
+              <Exhibitions1 />
             </Weblayout>
           </TransparentLayout>
         }

@@ -9,8 +9,8 @@ import {
 import { useNavigate } from "react-router-dom";
 
 // ✅ Import images from src/assets folder
-import uploadImg from "../assets/upload.jpg";
-import manageImg from "../assets/manage.png";
+import uploadImg from "../assets/createArt.jpg";
+import manageImg from "../assets/gggg.jpeg";
 import analysisImg from "../assets/analysis.jpg";
 
 const Artistdashboard = () => {

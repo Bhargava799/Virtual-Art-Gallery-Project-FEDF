@@ -1,5 +1,5 @@
 import React from "react";
-import bg2 from "../assets/bg2.webp"; // adjust path to assets
+import bg2 from "../assets/bg1.jpg"; // adjust path to assets
 
 const Weblayout = ({ children }) => {
   return (
