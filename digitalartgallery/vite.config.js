@@ -4,8 +4,8 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  // Use the repository name so GitHub Pages serves assets from the correct path
-  base: "/Virtual-Art-Gallery-Project-FEDF/",
+  // Use a relative base so asset URLs work regardless of Pages path (prevents 404s)
+  base: "./",
   build: {
     // Increase warning limit slightly and split vendor code into separate chunks
     chunkSizeWarningLimit: 1200, // in KB
